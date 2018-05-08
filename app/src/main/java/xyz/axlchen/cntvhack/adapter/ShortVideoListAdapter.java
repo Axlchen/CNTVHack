@@ -1,4 +1,4 @@
-package xyz.axlchen.cntvhack.adapters;
+package xyz.axlchen.cntvhack.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import xyz.axlchen.cntvhack.R;
-import xyz.axlchen.cntvhack.activitys.PlayVideoActivity;
+import xyz.axlchen.cntvhack.activity.PlayVideoActivity;
 import xyz.axlchen.cntvhack.data.entity.VideoInfo;
 import xyz.axlchen.cntvhack.listener.CommonOnItemTouchListener;
 

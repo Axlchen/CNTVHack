@@ -1,4 +1,4 @@
-package xyz.axlchen.cntvhack.fragments;
+package xyz.axlchen.cntvhack.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,9 +14,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import xyz.axlchen.cntvhack.R;
-import xyz.axlchen.cntvhack.adapters.ShortVideoCategoryAdapter;
+import xyz.axlchen.cntvhack.adapter.ShortVideoCategoryAdapter;
 import xyz.axlchen.cntvhack.data.entity.TotalShortVideoList;
-import xyz.axlchen.cntvhack.net.services.ShortVideoService;
+import xyz.axlchen.cntvhack.net.service.ShortVideoService;
 
 public class ShortVideoFragment extends BaseFragment {
 
@@ -55,6 +55,7 @@ public class ShortVideoFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
         mTabLayout = view.findViewById(R.id.tab_layout);
         ViewPager viewPager = view.findViewById(R.id.view_pager);
+        viewPager.setOffscreenPageLimit(5);
         mAdapter = new ShortVideoCategoryAdapter(getChildFragmentManager());
         viewPager.setAdapter(mAdapter);
         mTabLayout.setupWithViewPager(viewPager, true);

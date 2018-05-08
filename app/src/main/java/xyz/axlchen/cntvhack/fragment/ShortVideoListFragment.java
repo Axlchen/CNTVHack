@@ -1,4 +1,4 @@
-package xyz.axlchen.cntvhack.fragments;
+package xyz.axlchen.cntvhack.fragment;
 
 
 import android.os.Bundle;
@@ -15,9 +15,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import xyz.axlchen.cntvhack.R;
-import xyz.axlchen.cntvhack.adapters.ShortVideoListAdapter;
+import xyz.axlchen.cntvhack.adapter.ShortVideoListAdapter;
 import xyz.axlchen.cntvhack.data.entity.ShortVideoList;
-import xyz.axlchen.cntvhack.net.services.ShortVideoService;
+import xyz.axlchen.cntvhack.net.service.ShortVideoService;
 
 
 public class ShortVideoListFragment extends BaseFragment {

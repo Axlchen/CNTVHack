@@ -1,4 +1,4 @@
-package xyz.axlchen.cntvhack.net.services;
+package xyz.axlchen.cntvhack.net.service;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

@@ -1,4 +1,4 @@
-package xyz.axlchen.cntvhack.activitys;
+package xyz.axlchen.cntvhack.activity;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import xyz.axlchen.cntvhack.R;
-import xyz.axlchen.cntvhack.fragments.ShortVideoFragment;
+import xyz.axlchen.cntvhack.fragment.ShortVideoFragment;
 
 public class MainActivity extends AppCompatActivity {
 
