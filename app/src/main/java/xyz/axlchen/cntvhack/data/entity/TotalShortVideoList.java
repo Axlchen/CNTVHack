@@ -8,7 +8,7 @@ public class TotalShortVideoList {
 
     private String title;
     private List<VideoCategory> itemList;
-    private List<VideoInfo> videoList;
+    private List<ShortVideoInfo> videoList;
 
     public String getTitle() {
         return title;
@@ -18,7 +18,7 @@ public class TotalShortVideoList {
         return itemList;
     }
 
-    public List<VideoInfo> getVideoList() {
+    public List<ShortVideoInfo> getVideoList() {
         return videoList;
     }
 

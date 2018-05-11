@@ -1,33 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:paddingVertical="6dp"
+    android:paddingHorizontal="12dp">
 
     <ImageView
         android:id="@+id/iv_logo"
-        android:layout_width="60dp"
-        android:layout_height="60dp" />
+        android:layout_width="56dp"
+        android:layout_height="56dp" />
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/iv_logo"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/iv_logo"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
+            android:textSize="14sp"
             tools:text="央视财经评论" />
 
         <TextView
             android:id="@+id/tv_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textSize="11sp"
             tools:text="ssssssssssssssssssssssssssssssssssssssssssssssssssssssssss" />
     </LinearLayout>
-</android.support.constraint.ConstraintLayout>
+</RelativeLayout>

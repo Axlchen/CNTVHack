@@ -19,7 +19,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.converter.gson.GsonConverterFactory;
 import xyz.axlchen.cntvhack.R;
-import xyz.axlchen.cntvhack.data.entity.VideoDetailInfo;
+import xyz.axlchen.cntvhack.data.entity.ShortVideoDetailInfo;
 import xyz.axlchen.cntvhack.listener.CommonOrientationEventListener;
 import xyz.axlchen.cntvhack.net.NetworkConfig;
 import xyz.axlchen.cntvhack.net.service.ShortVideoService;
@@ -74,24 +74,24 @@ public class PlayVideoActivity extends BaseActivity {
                     .build();
             mRetrofit.create(ShortVideoService.class)
                     .getVideoInfo(mVideoId)
-                    .enqueue(new Callback<VideoDetailInfo>() {
+                    .enqueue(new Callback<ShortVideoDetailInfo>() {
                         @Override
-                        public void onResponse(Call<VideoDetailInfo> call, Response<VideoDetailInfo> response) {
+                        public void onResponse(Call<ShortVideoDetailInfo> call, Response<ShortVideoDetailInfo> response) {
                             if (response.body() != null) {
                                 startPlay(response.body());
                             }
                         }
 
                         @Override
-                        public void onFailure(Call<VideoDetailInfo> call, Throwable t) {
+                        public void onFailure(Call<ShortVideoDetailInfo> call, Throwable t) {
 
                         }
                     });
         }
     }
 
-    private void startPlay(VideoDetailInfo videoDetailInfo) {
-        MediaSource mediaSource = mMediaSourceHelper.buildMediaSource(Uri.parse(videoDetailInfo.getHlsUrl()), null, null, null);
+    private void startPlay(ShortVideoDetailInfo shortVideoDetailInfo) {
+        MediaSource mediaSource = mMediaSourceHelper.buildMediaSource(Uri.parse(shortVideoDetailInfo.getHlsUrl()), null, null, null);
 
         // Prepare the player with the source.
         mPlayer.prepare(mediaSource);

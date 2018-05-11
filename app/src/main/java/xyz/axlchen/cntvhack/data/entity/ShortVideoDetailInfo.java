@@ -2,7 +2,7 @@ package xyz.axlchen.cntvhack.data.entity;
 
 import com.google.gson.annotations.SerializedName;
 
-public class VideoDetailInfo {
+public class ShortVideoDetailInfo {
 
     private String title;
 
@@ -19,7 +19,7 @@ public class VideoDetailInfo {
 
     @Override
     public String toString() {
-        return "VideoDetailInfo{" +
+        return "ShortVideoDetailInfo{" +
                 "title='" + title + '\'' +
                 ", hlsUrl='" + hlsUrl + '\'' +
                 '}';

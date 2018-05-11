@@ -1,6 +1,7 @@
 package xyz.axlchen.cntvhack.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,11 +11,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import xyz.axlchen.cntvhack.R;
+import xyz.axlchen.cntvhack.activity.ProgramDetailActivity;
 import xyz.axlchen.cntvhack.data.entity.ProgramInfo;
 import xyz.axlchen.cntvhack.listener.CommonOnItemTouchListener;
 
@@ -32,6 +35,11 @@ public class ProgramListAdapter extends RecyclerView.Adapter<ProgramListAdapter.
             @Override
             public void onClick(int position) {
                 if (mProgramList != null && mProgramList.size() > position) {
+                    ProgramInfo programInfo = mProgramList.get(position);
+                    programInfo.getMediaId();
+                    Intent intent = new Intent(mContext, ProgramDetailActivity.class);
+                    intent.putExtra(ProgramDetailActivity.PROGRAM_ID, programInfo.getMediaId());
+                    mContext.startActivity(intent);
                 }
             }
         });
@@ -53,7 +61,7 @@ public class ProgramListAdapter extends RecyclerView.Adapter<ProgramListAdapter.
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.item_program_list, parent, false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.list_item_program, parent, false);
         return new ViewHolder(view);
     }
 
@@ -63,7 +71,10 @@ public class ProgramListAdapter extends RecyclerView.Adapter<ProgramListAdapter.
             ProgramInfo programInfo = mProgramList.get(position);
             holder.title.setText(programInfo.getMediaName());
             holder.description.setText(programInfo.getDescription());
-            Glide.with(mContext).load(programInfo.getLogoImg()).into(holder.logo);
+            Glide.with(mContext)
+                    .load(programInfo.getLogoImg())
+                    .apply(new RequestOptions().circleCrop())
+                    .into(holder.logo);
         }
     }
 

@@ -26,14 +26,20 @@
             android:name=".activity.LaunchActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_launch"
-            android:theme="@style/FullscreenTheme">
-
-        </activity>
-        <activity android:name=".activity.PlayVideoActivity"
+            android:theme="@style/FullscreenTheme" />
+        <activity
+            android:name=".activity.PlayVideoActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:theme="@style/FullscreenTheme">
+            android:theme="@style/FullscreenTheme" />
+        <activity
+            android:name=".activity.ProgramDetailActivity"
+            android:theme="@style/AppTheme.NoActionBar">
 
         </activity>
+        <activity
+            android:name=".activity.ScrollingActivity"
+            android:label="@string/title_activity_scrolling"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

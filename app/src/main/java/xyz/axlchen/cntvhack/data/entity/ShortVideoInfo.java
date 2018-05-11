@@ -2,7 +2,7 @@ package xyz.axlchen.cntvhack.data.entity;
 
 import com.google.gson.annotations.SerializedName;
 
-public class VideoInfo {
+public class ShortVideoInfo {
     private String guid;
     //        video_focus_date	String	1525487417000
 //        video_url	String	http://news.cctv.com/2018/05/05/VIDE11vN9VKMdPpjPIBAsdx4180505.shtml
@@ -39,7 +39,7 @@ public class VideoInfo {
 
     @Override
     public String toString() {
-        return "VideoInfo{" +
+        return "ShortVideoInfo{" +
                 "guid='" + guid + '\'' +
                 ", length='" + length + '\'' +
                 ", title='" + title + '\'' +

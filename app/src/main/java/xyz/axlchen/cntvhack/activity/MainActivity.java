@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_channel:
-                    if (mChannelFragment == null){
+                    if (mChannelFragment == null) {
                         mChannelFragment = ChannelFragment.newInstance();
                     }
                     replaceFragment(mChannelFragment);
@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         mChannelFragment = ChannelFragment.newInstance();

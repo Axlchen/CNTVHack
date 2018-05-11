@@ -3,9 +3,9 @@ package xyz.axlchen.cntvhack.data.entity;
 import java.util.List;
 
 public class ShortVideoList {
-    private List<VideoInfo> videoList;
+    private List<ShortVideoInfo> videoList;
 
-    public List<VideoInfo> getVideoList() {
+    public List<ShortVideoInfo> getVideoList() {
         return videoList;
     }
 
