@@ -1,6 +1,7 @@
 package xyz.axlchen.cntvhack.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import xyz.axlchen.cntvhack.R;
+import xyz.axlchen.cntvhack.activity.PlayVideoActivity;
 import xyz.axlchen.cntvhack.data.entity.ProgramVideoInfo;
 import xyz.axlchen.cntvhack.listener.CommonOnItemTouchListener;
 import xyz.axlchen.cntvhack.util.DensityUtil;
@@ -33,6 +35,9 @@ public class ProgramVideoListAdapter extends RecyclerView.Adapter<ProgramVideoLi
             @Override
             public void onClick(int position) {
                 if (mProgramVideoList != null && mProgramVideoList.size() > position) {
+                    Intent intent = new Intent(mRecyclerView.getContext(), PlayVideoActivity.class);
+                    intent.putExtra(PlayVideoActivity.VIDEO_ID, mProgramVideoList.get(position).getGuid());
+                    mContext.startActivity(intent);
                 }
             }
         });
