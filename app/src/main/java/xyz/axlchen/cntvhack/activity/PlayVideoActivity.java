@@ -3,8 +3,11 @@ package xyz.axlchen.cntvhack.activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 
+import com.google.android.exoplayer2.ExoPlaybackException;
 import com.google.android.exoplayer2.ExoPlayerFactory;
+import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection;
@@ -29,6 +32,7 @@ import xyz.axlchen.cntvhack.util.NetworkUtil;
 public class PlayVideoActivity extends BaseActivity {
 
     public static final String VIDEO_ID = "video_id";
+    public static final String TAG = "PlayVideoActivity";
 
     private String mVideoId;
     private DefaultBandwidthMeter mBandwidthMeter;
@@ -44,6 +48,7 @@ public class PlayVideoActivity extends BaseActivity {
         mVideoId = getIntent().getStringExtra(VIDEO_ID);
 
         PlayerView playerView = findViewById(R.id.exo_play_view);
+        playerView.showController();
 
         // 1. Create a default TrackSelector
         // Measures bandwidth during playback. Can be null if not required.
@@ -55,6 +60,25 @@ public class PlayVideoActivity extends BaseActivity {
 
         // 2. Create the player
         mPlayer = ExoPlayerFactory.newSimpleInstance(this, trackSelector);
+        mPlayer.addListener(new Player.DefaultEventListener() {
+            @Override
+            public void onLoadingChanged(boolean isLoading) {
+                super.onLoadingChanged(isLoading);
+                Log.d(TAG,"onLoadingChanged:" + isLoading);
+            }
+
+            @Override
+            public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
+                super.onPlayerStateChanged(playWhenReady, playbackState);
+                Log.d(TAG,"onPlayerStateChanged:" + playbackState);
+            }
+
+            @Override
+            public void onPlayerError(ExoPlaybackException error) {
+                super.onPlayerError(error);
+                Log.d(TAG,"onPlayerError:" + error.getMessage());
+            }
+        });
 
         playerView.setPlayer(mPlayer);
         getVideoInfo();
@@ -99,6 +123,22 @@ public class PlayVideoActivity extends BaseActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        if (mPlayer != null){
+            mPlayer.setPlayWhenReady(true);
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (mPlayer != null) {
+            mPlayer.setPlayWhenReady(false);
+        }
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         releasePlayer();
@@ -112,9 +152,5 @@ public class PlayVideoActivity extends BaseActivity {
             mPlayer.release();
             mPlayer = null;
         }
-    }
-
-    private void initializePlayer() {
-
     }
 }

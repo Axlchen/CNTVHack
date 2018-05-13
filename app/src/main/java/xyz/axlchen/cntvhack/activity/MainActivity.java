@@ -9,6 +9,7 @@ import android.view.MenuItem;
 
 import xyz.axlchen.cntvhack.R;
 import xyz.axlchen.cntvhack.fragment.ChannelFragment;
+import xyz.axlchen.cntvhack.fragment.MoreFragment;
 import xyz.axlchen.cntvhack.fragment.ProgramFragment;
 import xyz.axlchen.cntvhack.fragment.ShortVideoFragment;
 
@@ -17,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
     private ChannelFragment mChannelFragment;
     private ProgramFragment mProgramFragment;
     private ShortVideoFragment mShortVideoFragment;
+    private MoreFragment mMoreFragment;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -42,7 +44,11 @@ public class MainActivity extends AppCompatActivity {
                     }
                     replaceFragment(mShortVideoFragment);
                     return true;
-                case R.id.navigation_notifications:
+                case R.id.navigation_more:
+                    if (mMoreFragment == null) {
+                        mMoreFragment = MoreFragment.newInstance();
+                    }
+                    replaceFragment(mMoreFragment);
                     return true;
             }
             return false;
