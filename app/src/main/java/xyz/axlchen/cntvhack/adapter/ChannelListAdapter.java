@@ -1,78 +1,85 @@
 package xyz.axlchen.cntvhack.adapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import xyz.axlchen.cntvhack.R;
-import xyz.axlchen.cntvhack.fragment.ChannelListFragment.OnListFragmentInteractionListener;
-import xyz.axlchen.cntvhack.fragment.dummy.DummyContent.DummyItem;
+import xyz.axlchen.cntvhack.data.entity.ChannelList;
+import xyz.axlchen.cntvhack.listener.CommonOnItemTouchListener;
 
-/**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
- * specified {@link OnListFragmentInteractionListener}.
- * TODO: Replace the implementation with code for your data type.
- */
 public class ChannelListAdapter extends RecyclerView.Adapter<ChannelListAdapter.ViewHolder> {
 
-    private final List<DummyItem> mValues;
-    private final OnListFragmentInteractionListener mListener;
+    private List<ChannelList.ChannelInfo> mChannelList;
+    private RecyclerView mRecyclerView;
+    private Context mContext;
 
-    public ChannelListAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener) {
-        mValues = items;
-        mListener = listener;
+    public ChannelListAdapter(RecyclerView recyclerView, List<ChannelList.ChannelInfo> channelList) {
+        mRecyclerView = recyclerView;
+        mContext = mRecyclerView.getContext();
+        CommonOnItemTouchListener commonOnItemTouchListener = new CommonOnItemTouchListener(recyclerView.getContext());
+        commonOnItemTouchListener.setOnItemClickListener(new CommonOnItemTouchListener.OnItemClickListener() {
+            @Override
+            public void onClick(int position) {
+                if (mChannelList != null && mChannelList.size() > position) {
+
+                }
+            }
+        });
+        mRecyclerView.addOnItemTouchListener(commonOnItemTouchListener);
+        setChannelList(channelList);
+    }
+
+    public void setChannelList(List<ChannelList.ChannelInfo> channelList) {
+        if (mChannelList == null) {
+            mChannelList = new ArrayList<>();
+        }
+        if (channelList != null && channelList.size() > 0) {
+            mChannelList.clear();
+            mChannelList.addAll(channelList);
+            notifyDataSetChanged();
+        }
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.list_item_channel, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_channel, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
-
-        holder.mView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (null != mListener) {
-                    // Notify the active callbacks interface (the activity, if the
-                    // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentInteraction(holder.mItem);
-                }
-            }
-        });
+        if (mChannelList.size() > position) {
+            ChannelList.ChannelInfo channelInfo = mChannelList.get(position);
+            holder.name.setText(channelInfo.getTitle());
+        }
     }
 
     @Override
     public int getItemCount() {
-        return mValues.size();
+        return mChannelList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        public final View mView;
-        public final TextView mIdView;
-        public final TextView mContentView;
-        public DummyItem mItem;
+    class ViewHolder extends RecyclerView.ViewHolder {
+        private TextView name;
+        private TextView currentItem;
+        private ImageView keyFrame;
 
-        public ViewHolder(View view) {
+        ViewHolder(View view) {
             super(view);
-            mView = view;
-            mIdView = (TextView) view.findViewById(R.id.item_number);
-            mContentView = (TextView) view.findViewById(R.id.content);
-        }
-
-        @Override
-        public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
+            name = view.findViewById(R.id.tv_name);
+            currentItem = view.findViewById(R.id.tv_current_item);
+            keyFrame = view.findViewById(R.id.iv_key_frame);
         }
     }
 }
