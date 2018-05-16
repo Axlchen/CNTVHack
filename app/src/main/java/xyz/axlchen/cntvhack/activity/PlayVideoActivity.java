@@ -4,6 +4,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.WindowManager;
 
 import com.google.android.exoplayer2.ExoPlaybackException;
 import com.google.android.exoplayer2.ExoPlayerFactory;
@@ -44,6 +45,7 @@ public class PlayVideoActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play_video);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         mVideoId = getIntent().getStringExtra(VIDEO_ID);
 
@@ -64,19 +66,19 @@ public class PlayVideoActivity extends BaseActivity {
             @Override
             public void onLoadingChanged(boolean isLoading) {
                 super.onLoadingChanged(isLoading);
-                Log.d(TAG,"onLoadingChanged:" + isLoading);
+                Log.d(TAG, "onLoadingChanged:" + isLoading);
             }
 
             @Override
             public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
                 super.onPlayerStateChanged(playWhenReady, playbackState);
-                Log.d(TAG,"onPlayerStateChanged:" + playbackState);
+                Log.d(TAG, "onPlayerStateChanged:" + playbackState);
             }
 
             @Override
             public void onPlayerError(ExoPlaybackException error) {
                 super.onPlayerError(error);
-                Log.d(TAG,"onPlayerError:" + error.getMessage());
+                Log.d(TAG, "onPlayerError:" + error.getMessage());
             }
         });
 
@@ -125,7 +127,7 @@ public class PlayVideoActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (mPlayer != null){
+        if (mPlayer != null) {
             mPlayer.setPlayWhenReady(true);
         }
     }
