@@ -4,6 +4,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.text.TextUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +36,12 @@ public class ChannelCategoryAdapter extends FragmentPagerAdapter {
     public void setCategories(List<ChannelCategory.Item> categories) {
         if (categories.size() > 0) {
             mCategories.clear();
-            mCategories.addAll(categories);
+            for (ChannelCategory.Item category : categories) {
+                if (!(!TextUtils.isEmpty(category.getChannelSign())
+                        && category.getChannelSign().equals("hudong"))) {
+                    mCategories.add(category);
+                }
+            }
 
             mFragments.clear();
             for (ChannelCategory.Item category : mCategories) {

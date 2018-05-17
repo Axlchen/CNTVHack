@@ -25,7 +25,7 @@ public class ChannelCategory {
         private String title;
         private int isHD;
         private String channelListUrl;
-
+        private String channelSign;
 
         public String getTitle() {
             return title;
@@ -39,12 +39,17 @@ public class ChannelCategory {
             return channelListUrl;
         }
 
+        public String getChannelSign() {
+            return channelSign;
+        }
+
         @Override
         public String toString() {
             return "Item{" +
                     "title='" + title + '\'' +
                     ", isHD=" + isHD +
                     ", channelListUrl='" + channelListUrl + '\'' +
+                    ", channelSign='" + channelSign + '\'' +
                     '}';
         }
     }

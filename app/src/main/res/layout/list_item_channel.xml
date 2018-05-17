@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
@@ -7,12 +8,14 @@
 
     <ImageView
         android:id="@+id/iv_key_frame"
-        android:layout_width="80dp"
-        android:layout_height="56dp" />
+        android:layout_width="120dp"
+        android:layout_height="70dp"
+        android:scaleType="centerCrop" />
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
         android:layout_marginLeft="12dp"
         android:layout_toRightOf="@id/iv_key_frame"
         android:orientation="vertical">
@@ -20,12 +23,49 @@
         <TextView
             android:id="@+id/tv_name"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@android:color/black"
+            tools:text="ssssssssssssssssssssss" />
 
         <TextView
             android:id="@+id/tv_current_item"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="暂无节目单"
+            android:textSize="12sp" />
+
+        <LinearLayout
+            android:id="@+id/ll_progress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:visibility="invisible">
+
+            <TextView
+                android:id="@+id/tv_start_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="11sp" />
+
+            <ProgressBar
+                android:id="@+id/pb_progress"
+                style="@android:style/Widget.ProgressBar.Horizontal"
+                android:layout_width="0dp"
+                android:layout_height="2dp"
+                android:layout_marginHorizontal="6dp"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/tv_end_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="11sp"
+                tools:text="sdds" />
+        </LinearLayout>
     </LinearLayout>
 
 </RelativeLayout>

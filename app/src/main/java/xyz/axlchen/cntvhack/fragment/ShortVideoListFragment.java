@@ -77,7 +77,7 @@ public class ShortVideoListFragment extends BaseFragment {
 
                     @Override
                     public void onFailure(Call<ShortVideoList> call, Throwable t) {
-                        Log.d(TAG, t.getMessage());
+                        Log.d(TAG, t.toString());
                     }
                 });
     }

@@ -2,24 +2,34 @@ package xyz.axlchen.cntvhack.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import xyz.axlchen.cntvhack.R;
 import xyz.axlchen.cntvhack.data.entity.ChannelList;
+import xyz.axlchen.cntvhack.data.entity.NowEpgInfo;
 import xyz.axlchen.cntvhack.listener.CommonOnItemTouchListener;
+import xyz.axlchen.cntvhack.net.NetworkManager;
+import xyz.axlchen.cntvhack.net.service.EpgService;
 
 public class ChannelListAdapter extends RecyclerView.Adapter<ChannelListAdapter.ViewHolder> {
 
+    private static final String TAG = "ChannelListAdapter";
     private List<ChannelList.ChannelInfo> mChannelList;
     private RecyclerView mRecyclerView;
     private Context mContext;
@@ -60,8 +70,43 @@ public class ChannelListAdapter extends RecyclerView.Adapter<ChannelListAdapter.
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         if (mChannelList.size() > position) {
-            ChannelList.ChannelInfo channelInfo = mChannelList.get(position);
+            final ChannelList.ChannelInfo channelInfo = mChannelList.get(position);
             holder.name.setText(channelInfo.getTitle());
+            Glide.with(mContext).load("http://t.live.cntv.cn/imagehd/"
+                    + channelInfo.getChannelId() + "_01.png").into(holder.keyFrame);
+            holder.currentItem.setTag(channelInfo.getChannelId());
+            NetworkManager.getClient().create(EpgService.class).getNowEpg(channelInfo.getChannelId())
+                    .enqueue(new Callback<NowEpgInfo>() {
+                        @Override
+                        public void onResponse(Call<NowEpgInfo> call, Response<NowEpgInfo> response) {
+                            if (response.body() != null &&
+                                    holder.currentItem.getTag().equals(channelInfo.getChannelId())) {
+                                if (TextUtils.isEmpty(response.body().getErrcode())) {
+                                    NowEpgInfo nowEpgInfo = response.body();
+                                    holder.currentItem.setText(nowEpgInfo.getItemName());
+                                    holder.progressLayout.setVisibility(View.VISIBLE);
+                                    if (!TextUtils.isEmpty(nowEpgInfo.getStartString()) &&
+                                            nowEpgInfo.getStartString().trim().length() > 5){
+                                        holder.startTime.setText(nowEpgInfo.getStartString().trim().substring(0,5));
+                                    }
+                                    if (!TextUtils.isEmpty(nowEpgInfo.getEndString()) &&
+                                            nowEpgInfo.getEndString().trim().length() > 5){
+                                        holder.endTime.setText(nowEpgInfo.getEndString().trim().substring(0,5));
+                                    }
+                                    holder.progress.setProgress(getProgress(nowEpgInfo.getStart(),
+                                            nowEpgInfo.getNow(), nowEpgInfo.getEnd()));
+                                } else {
+                                    holder.currentItem.setText("暂无节目单");
+                                    holder.progressLayout.setVisibility(View.INVISIBLE);
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<NowEpgInfo> call, Throwable t) {
+                            Log.d(TAG, t.toString());
+                        }
+                    });
         }
     }
 
@@ -70,16 +115,30 @@ public class ChannelListAdapter extends RecyclerView.Adapter<ChannelListAdapter.
         return mChannelList.size();
     }
 
+    private int getProgress(long start, long now, long end) {
+        return (int) ((now - start) * 1.0f / (end - start) * 100);
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder {
+
         private TextView name;
         private TextView currentItem;
         private ImageView keyFrame;
+        private TextView startTime;
+        private TextView endTime;
+        private ProgressBar progress;
+        private LinearLayout progressLayout;
 
         ViewHolder(View view) {
             super(view);
             name = view.findViewById(R.id.tv_name);
             currentItem = view.findViewById(R.id.tv_current_item);
             keyFrame = view.findViewById(R.id.iv_key_frame);
+            startTime = view.findViewById(R.id.tv_start_time);
+            endTime = view.findViewById(R.id.tv_end_time);
+            progressLayout = view.findViewById(R.id.ll_progress);
+            progress = view.findViewById(R.id.pb_progress);
+            progress.setMax(100);
         }
     }
 }
