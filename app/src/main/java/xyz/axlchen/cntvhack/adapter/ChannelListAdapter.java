@@ -1,6 +1,7 @@
 package xyz.axlchen.cntvhack.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
@@ -21,6 +22,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import xyz.axlchen.cntvhack.R;
+import xyz.axlchen.cntvhack.activity.ChannelLiveActivity;
 import xyz.axlchen.cntvhack.data.entity.ChannelList;
 import xyz.axlchen.cntvhack.data.entity.NowEpgInfo;
 import xyz.axlchen.cntvhack.listener.CommonOnItemTouchListener;
@@ -41,8 +43,11 @@ public class ChannelListAdapter extends RecyclerView.Adapter<ChannelListAdapter.
         commonOnItemTouchListener.setOnItemClickListener(new CommonOnItemTouchListener.OnItemClickListener() {
             @Override
             public void onClick(int position) {
-                if (mChannelList != null && mChannelList.size() > position) {
-
+                if (mChannelList != null && mChannelList.size() > position &&
+                        !TextUtils.isEmpty(mChannelList.get(position).getP2pUrl())) {
+                    Intent intent = new Intent(mContext, ChannelLiveActivity.class);
+                    intent.putExtra(ChannelLiveActivity.CHANNEL_ID, mChannelList.get(position).getP2pUrl());
+                    mContext.startActivity(intent);
                 }
             }
         });
@@ -86,12 +91,12 @@ public class ChannelListAdapter extends RecyclerView.Adapter<ChannelListAdapter.
                                     holder.currentItem.setText(nowEpgInfo.getItemName());
                                     holder.progressLayout.setVisibility(View.VISIBLE);
                                     if (!TextUtils.isEmpty(nowEpgInfo.getStartString()) &&
-                                            nowEpgInfo.getStartString().trim().length() > 5){
-                                        holder.startTime.setText(nowEpgInfo.getStartString().trim().substring(0,5));
+                                            nowEpgInfo.getStartString().trim().length() > 5) {
+                                        holder.startTime.setText(nowEpgInfo.getStartString().trim().substring(0, 5));
                                     }
                                     if (!TextUtils.isEmpty(nowEpgInfo.getEndString()) &&
-                                            nowEpgInfo.getEndString().trim().length() > 5){
-                                        holder.endTime.setText(nowEpgInfo.getEndString().trim().substring(0,5));
+                                            nowEpgInfo.getEndString().trim().length() > 5) {
+                                        holder.endTime.setText(nowEpgInfo.getEndString().trim().substring(0, 5));
                                     }
                                     holder.progress.setProgress(getProgress(nowEpgInfo.getStart(),
                                             nowEpgInfo.getNow(), nowEpgInfo.getEnd()));

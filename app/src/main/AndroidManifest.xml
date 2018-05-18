@@ -32,6 +32,10 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/FullscreenTheme" />
         <activity
+            android:name=".activity.ChannelLiveActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/FullscreenTheme" />
+        <activity
             android:name=".activity.ProgramDetailActivity"
             android:theme="@style/AppTheme.NoActionBar">
 

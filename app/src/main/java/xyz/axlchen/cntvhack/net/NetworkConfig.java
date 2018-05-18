@@ -7,5 +7,6 @@ public final class NetworkConfig {
 
     //    http://vdn.apps.cntv.cn/api/getHttpVideoInfo.do?pid=a89c5634780321395494caa2b6e8a355&tsp=1525613140&uid=895270a072ca4ff469d90353d5b706c0&vc=3EBF4B631D9BFE539ACB5D71A0722EAE&vn=3&wlan=w
     public static final String VDN_HOST = "http://vdn.apps.cntv.cn/";
+    public static final String LIVE_HOST = "http://vdn.live.cntv.cn/";
 
 }

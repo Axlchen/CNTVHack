@@ -4,12 +4,13 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="12dp">
+    android:paddingVertical="6dp"
+    android:paddingHorizontal="12dp">
 
     <ImageView
         android:id="@+id/iv_key_frame"
         android:layout_width="120dp"
-        android:layout_height="70dp"
+        android:layout_height="65dp"
         android:scaleType="centerCrop" />
 
     <LinearLayout
