@@ -11,7 +11,6 @@ import java.util.Map;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 import xyz.axlchen.cntvhack.data.entity.UrlConfig;
 import xyz.axlchen.cntvhack.net.service.ConfigService;
 import xyz.axlchen.cntvhack.util.ContextUtil;
@@ -34,11 +33,11 @@ public final class Config {
         }
     }
 
-    private static void loadUrlConfig() {
+    static void loadUrlConfig() {
         //get it from sp
         getUrlConfigFromSp();
         //get from network
-        new Retrofit.Builder().build().create(ConfigService.class)
+        CoreClassManager.getScalarRetrofit().create(ConfigService.class)
                 .getUrlConfig().enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
@@ -50,7 +49,7 @@ public final class Config {
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
-                Log.d(TAG, t.getMessage());
+                Log.d(TAG, t.toString());
             }
         });
     }

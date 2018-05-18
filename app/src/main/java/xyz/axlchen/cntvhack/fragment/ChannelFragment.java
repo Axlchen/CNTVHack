@@ -74,7 +74,7 @@ public class ChannelFragment extends BaseFragment {
 
             @Override
             public void onFailure(Call<DataWrapper<ChannelCategory>> call, Throwable t) {
-                Log.d(TAG, t.getMessage());
+                Log.d(TAG, t.toString());
             }
         });
     }

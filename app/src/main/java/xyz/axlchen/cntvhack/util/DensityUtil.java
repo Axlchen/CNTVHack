@@ -3,7 +3,7 @@ package xyz.axlchen.cntvhack.util;
 import android.content.Context;
 import android.util.DisplayMetrics;
 
-public class DensityUtil {
+public final class DensityUtil {
 
     public static final float XXHDPI = 2f;
 

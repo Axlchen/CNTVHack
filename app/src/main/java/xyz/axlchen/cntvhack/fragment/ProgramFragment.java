@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +16,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import xyz.axlchen.cntvhack.R;
 import xyz.axlchen.cntvhack.adapter.ProgramCategoryAdapter;
-import xyz.axlchen.cntvhack.adapter.ShortVideoCategoryAdapter;
+import xyz.axlchen.cntvhack.core.Config;
 import xyz.axlchen.cntvhack.data.entity.DataWrapper;
 import xyz.axlchen.cntvhack.data.entity.ProgramCategory;
 import xyz.axlchen.cntvhack.net.service.ProgramService;
@@ -23,6 +24,7 @@ import xyz.axlchen.cntvhack.net.service.ProgramService;
 public class ProgramFragment extends BaseFragment {
 
     private static final String TAG = "ProgramFragment";
+    private static final String URL_KEY = "media_lanmuList_url";
     private TabLayout mTabLayout;
     private ProgramCategoryAdapter mAdapter;
 
@@ -64,7 +66,11 @@ public class ProgramFragment extends BaseFragment {
     }
 
     private void getData() {
-        mRetrofit.create(ProgramService.class).getProgramCategory().enqueue(new Callback<DataWrapper<ProgramCategory>>() {
+        String url = Config.getUrlByName(URL_KEY);
+        if (TextUtils.isEmpty(url)) {
+            return;
+        }
+        mRetrofit.create(ProgramService.class).getProgramCategory(url).enqueue(new Callback<DataWrapper<ProgramCategory>>() {
             @Override
             public void onResponse(Call<DataWrapper<ProgramCategory>> call, Response<DataWrapper<ProgramCategory>> response) {
                 if (response.body() != null && response.body().getData() != null) {
