@@ -1,4 +1,4 @@
-package xyz.axlchen.cntvhack.fragment;
+package xyz.axlchen.cntvhack.ui.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -9,8 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -19,9 +17,7 @@ import xyz.axlchen.cntvhack.R;
 import xyz.axlchen.cntvhack.adapter.ChannelListAdapter;
 import xyz.axlchen.cntvhack.data.entity.ChannelList;
 import xyz.axlchen.cntvhack.data.entity.DataWrapper;
-import xyz.axlchen.cntvhack.data.entity.ProgramInfo;
 import xyz.axlchen.cntvhack.net.service.ChannelService;
-import xyz.axlchen.cntvhack.net.service.ProgramService;
 
 public class ChannelListFragment extends BaseFragment {
 

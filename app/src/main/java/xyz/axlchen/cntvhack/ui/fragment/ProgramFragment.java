@@ -1,4 +1,4 @@
-package xyz.axlchen.cntvhack.fragment;
+package xyz.axlchen.cntvhack.ui.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;

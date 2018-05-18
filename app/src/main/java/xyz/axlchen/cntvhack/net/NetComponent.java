@@ -3,8 +3,8 @@ package xyz.axlchen.cntvhack.net;
 import javax.inject.Singleton;
 
 import dagger.Component;
-import xyz.axlchen.cntvhack.activity.BaseActivity;
-import xyz.axlchen.cntvhack.fragment.BaseFragment;
+import xyz.axlchen.cntvhack.ui.activity.BaseActivity;
+import xyz.axlchen.cntvhack.ui.fragment.BaseFragment;
 
 @Singleton
 @Component(modules = {NetModule.class})

@@ -1,4 +1,4 @@
-package xyz.axlchen.cntvhack.activity;
+package xyz.axlchen.cntvhack.ui.activity;
 
 import android.annotation.SuppressLint;
 import android.support.v7.app.ActionBar;

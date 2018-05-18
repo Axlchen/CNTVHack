@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import xyz.axlchen.cntvhack.data.entity.TotalShortVideoList;
-import xyz.axlchen.cntvhack.fragment.ShortVideoListFragment;
+import xyz.axlchen.cntvhack.ui.fragment.ShortVideoListFragment;
 
 public class ShortVideoCategoryAdapter extends FragmentPagerAdapter {
 

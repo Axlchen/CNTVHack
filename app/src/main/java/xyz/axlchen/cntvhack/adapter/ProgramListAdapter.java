@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import xyz.axlchen.cntvhack.R;
-import xyz.axlchen.cntvhack.activity.ProgramDetailActivity;
+import xyz.axlchen.cntvhack.ui.activity.ProgramDetailActivity;
 import xyz.axlchen.cntvhack.data.entity.ProgramInfo;
 import xyz.axlchen.cntvhack.listener.CommonOnItemTouchListener;
 

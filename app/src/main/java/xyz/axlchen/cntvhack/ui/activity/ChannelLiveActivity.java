@@ -1,4 +1,4 @@
-package xyz.axlchen.cntvhack.activity;
+package xyz.axlchen.cntvhack.ui.activity;
 
 import android.net.Uri;
 import android.os.Bundle;
@@ -23,19 +23,18 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.converter.gson.GsonConverterFactory;
 import xyz.axlchen.cntvhack.R;
-import xyz.axlchen.cntvhack.data.entity.ShortVideoDetailInfo;
+import xyz.axlchen.cntvhack.data.entity.ChannelLiveInfo;
 import xyz.axlchen.cntvhack.listener.CommonOrientationEventListener;
 import xyz.axlchen.cntvhack.net.NetworkConfig;
-import xyz.axlchen.cntvhack.net.service.ShortVideoService;
+import xyz.axlchen.cntvhack.net.service.LiveService;
 import xyz.axlchen.cntvhack.util.MediaSourceHelper;
-import xyz.axlchen.cntvhack.util.NetworkUtil;
 
-public class PlayVideoActivity extends BaseActivity {
+public class ChannelLiveActivity extends BaseActivity {
 
-    public static final String VIDEO_ID = "video_id";
-    public static final String TAG = "PlayVideoActivity";
+    public static final String CHANNEL_ID = "channel_id";
+    private static final String TAG = "ChannelLiveActivity";
 
-    private String mVideoId;
+    private String mChannelId;
     private DefaultBandwidthMeter mBandwidthMeter;
     private SimpleExoPlayer mPlayer;
     private CommonOrientationEventListener mOrientationEventListener;
@@ -47,7 +46,7 @@ public class PlayVideoActivity extends BaseActivity {
         setContentView(R.layout.activity_play_video);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-        mVideoId = getIntent().getStringExtra(VIDEO_ID);
+        mChannelId = getIntent().getStringExtra(CHANNEL_ID);
 
         PlayerView playerView = findViewById(R.id.exo_play_view);
         playerView.showController();
@@ -83,45 +82,52 @@ public class PlayVideoActivity extends BaseActivity {
         });
 
         playerView.setPlayer(mPlayer);
-        getVideoInfo();
 
         mOrientationEventListener = new CommonOrientationEventListener(this);
         if (mOrientationEventListener.canDetectOrientation()) {
             mOrientationEventListener.enable();
         }
         mMediaSourceHelper = new MediaSourceHelper(this);
-        NetworkUtil.getNetworkType(this);
+        getLiveInfo();
     }
 
-    private void getVideoInfo() {
-        if (!TextUtils.isEmpty(mVideoId)) {
-            mRetrofit = mRetrofit.newBuilder().baseUrl(NetworkConfig.VDN_HOST)
+    private void getLiveInfo() {
+        if (!TextUtils.isEmpty(mChannelId)) {
+            mRetrofit = mRetrofit.newBuilder().baseUrl(NetworkConfig.LIVE_HOST)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
-            mRetrofit.create(ShortVideoService.class)
-                    .getVideoInfo(mVideoId)
-                    .enqueue(new Callback<ShortVideoDetailInfo>() {
+            mRetrofit.create(LiveService.class)
+                    .getChannelLiveInfo(mChannelId)
+                    .enqueue(new Callback<ChannelLiveInfo>() {
                         @Override
-                        public void onResponse(Call<ShortVideoDetailInfo> call, Response<ShortVideoDetailInfo> response) {
+                        public void onResponse(Call<ChannelLiveInfo> call, Response<ChannelLiveInfo> response) {
                             if (response.body() != null) {
                                 startPlay(response.body());
                             }
                         }
 
                         @Override
-                        public void onFailure(Call<ShortVideoDetailInfo> call, Throwable t) {
-
+                        public void onFailure(Call<ChannelLiveInfo> call, Throwable t) {
+                            Log.d(TAG, t.toString());
                         }
                     });
         }
     }
 
-    private void startPlay(ShortVideoDetailInfo shortVideoDetailInfo) {
-        MediaSource mediaSource = mMediaSourceHelper.buildMediaSource(Uri.parse(shortVideoDetailInfo.getHlsUrl()), null, null, null);
-
+    private void startPlay(ChannelLiveInfo channelLiveInfo) {
+        ChannelLiveInfo.FlvUrl flvUrl = channelLiveInfo.getFlvUrl();
+        ChannelLiveInfo.HlsUrl hlsUrl = channelLiveInfo.getHlsUrl();
+        MediaSource mediaSource = null;
+        if (flvUrl != null && !TextUtils.isEmpty(flvUrl.getFlv1())) {
+            mediaSource = mMediaSourceHelper.buildMediaSource(Uri.parse(flvUrl.getFlv1()), null, null, null);
+        } else if (hlsUrl != null && !TextUtils.isEmpty(hlsUrl.getHls1())) {
+            mediaSource = mMediaSourceHelper.buildMediaSource(Uri.parse(hlsUrl.getHls1()), null, null, null);
+        }
         // Prepare the player with the source.
-        mPlayer.prepare(mediaSource);
-        mPlayer.setPlayWhenReady(true);
+        if (mediaSource != null) {
+            mPlayer.prepare(mediaSource);
+            mPlayer.setPlayWhenReady(true);
+        }
     }
 
     @Override

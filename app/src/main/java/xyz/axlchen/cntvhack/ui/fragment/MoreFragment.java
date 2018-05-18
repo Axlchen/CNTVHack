@@ -1,15 +1,14 @@
-package xyz.axlchen.cntvhack.fragment;
+package xyz.axlchen.cntvhack.ui.fragment;
 
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import xyz.axlchen.cntvhack.R;
 
-public class MoreFragment extends Fragment {
+public class MoreFragment extends BaseFragment {
 
     public MoreFragment() {
         // Required empty public constructor

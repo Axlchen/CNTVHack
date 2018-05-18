@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import xyz.axlchen.cntvhack.R;
-import xyz.axlchen.cntvhack.activity.PlayVideoActivity;
+import xyz.axlchen.cntvhack.ui.activity.PlayVideoActivity;
 import xyz.axlchen.cntvhack.data.entity.ProgramVideoInfo;
 import xyz.axlchen.cntvhack.listener.CommonOnItemTouchListener;
 import xyz.axlchen.cntvhack.util.DensityUtil;

@@ -23,7 +23,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import xyz.axlchen.cntvhack.R;
 import xyz.axlchen.cntvhack.core.CoreClassManager;
-import xyz.axlchen.cntvhack.activity.ChannelLiveActivity;
+import xyz.axlchen.cntvhack.ui.activity.ChannelLiveActivity;
 import xyz.axlchen.cntvhack.data.entity.ChannelList;
 import xyz.axlchen.cntvhack.data.entity.NowEpgInfo;
 import xyz.axlchen.cntvhack.listener.CommonOnItemTouchListener;

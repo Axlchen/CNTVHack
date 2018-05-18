@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import xyz.axlchen.cntvhack.data.entity.ProgramCategory;
-import xyz.axlchen.cntvhack.fragment.ProgramListFragment;
+import xyz.axlchen.cntvhack.ui.fragment.ProgramListFragment;
 
 public class ProgramCategoryAdapter extends FragmentPagerAdapter {
 

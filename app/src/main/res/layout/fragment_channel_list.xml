@@ -5,5 +5,5 @@
     android:name="xyz.axlchen.cntvhack.fragment.ChannelListFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.ChannelListFragment"
+    tools:context=".ui.fragment.ChannelListFragment"
     tools:listitem="@layout/list_item_channel" />

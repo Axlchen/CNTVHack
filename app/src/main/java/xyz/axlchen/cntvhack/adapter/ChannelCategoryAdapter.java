@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import xyz.axlchen.cntvhack.data.entity.ChannelCategory;
-import xyz.axlchen.cntvhack.fragment.ChannelListFragment;
+import xyz.axlchen.cntvhack.ui.fragment.ChannelListFragment;
 
 public class ChannelCategoryAdapter extends FragmentPagerAdapter {
 
