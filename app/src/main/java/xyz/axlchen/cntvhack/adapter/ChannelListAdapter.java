@@ -1,6 +1,7 @@
 package xyz.axlchen.cntvhack.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
@@ -22,6 +23,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import xyz.axlchen.cntvhack.R;
 import xyz.axlchen.cntvhack.core.CoreClassManager;
+import xyz.axlchen.cntvhack.activity.ChannelLiveActivity;
 import xyz.axlchen.cntvhack.data.entity.ChannelList;
 import xyz.axlchen.cntvhack.data.entity.NowEpgInfo;
 import xyz.axlchen.cntvhack.listener.CommonOnItemTouchListener;
@@ -41,8 +43,11 @@ public class ChannelListAdapter extends RecyclerView.Adapter<ChannelListAdapter.
         commonOnItemTouchListener.setOnItemClickListener(new CommonOnItemTouchListener.OnItemClickListener() {
             @Override
             public void onClick(int position) {
-                if (mChannelList != null && mChannelList.size() > position) {
-
+                if (mChannelList != null && mChannelList.size() > position &&
+                        !TextUtils.isEmpty(mChannelList.get(position).getP2pUrl())) {
+                    Intent intent = new Intent(mContext, ChannelLiveActivity.class);
+                    intent.putExtra(ChannelLiveActivity.CHANNEL_ID, mChannelList.get(position).getP2pUrl());
+                    mContext.startActivity(intent);
                 }
             }
         });
