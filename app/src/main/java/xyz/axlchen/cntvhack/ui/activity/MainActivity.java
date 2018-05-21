@@ -28,16 +28,16 @@ public class MainActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_channel:
-                    mViewPager.setCurrentItem(0);
+                    mViewPager.setCurrentItem(0,false);
                     return true;
                 case R.id.navigation_program:
-                    mViewPager.setCurrentItem(1);
+                    mViewPager.setCurrentItem(1,false);
                     return true;
                 case R.id.navigation_short_video:
-                    mViewPager.setCurrentItem(2);
+                    mViewPager.setCurrentItem(2,false);
                     return true;
                 case R.id.navigation_more:
-                    mViewPager.setCurrentItem(3);
+                    mViewPager.setCurrentItem(3,false);
                     return true;
             }
             return false;
@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
         fragments.add(MoreFragment.newInstance());
 
         mViewPager = findViewById(R.id.view_pager);
-        mViewPager.setPageMargin(5);
+        mViewPager.setOffscreenPageLimit(4);
         mViewPager.setAdapter(new MainPageAdapter(getSupportFragmentManager(), fragments));
         mViewPager.addOnPageChangeListener(mOnPageChangeListener);
 
