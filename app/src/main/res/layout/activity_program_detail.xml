@@ -19,8 +19,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
-            app:contentScrim="?attr/colorPrimary"
+            app:collapsedTitleGravity="center"
+            app:contentScrim="@android:color/white"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:scrimAnimationDuration="500"
+            app:scrimVisibleHeightTrigger="82dp"
+            app:statusBarScrim="@android:color/white"
             app:toolbarId="@+id/toolbar">
 
             <android.support.v7.widget.Toolbar
@@ -28,13 +32,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
-                app:popupTheme="@style/AppTheme.PopupOverlay"
-                app:title="" />
+                app:popupTheme="@style/AppTheme.PopupOverlay" />
 
             <RelativeLayout
+                android:fitsSystemWindows="true"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="?attr/actionBarSize">
+                android:layout_height="match_parent"
+                android:paddingTop="25dp"
+                android:layout_marginTop="?attr/actionBarSize"
+                android:paddingLeft="15dp">
 
                 <TextView
                     android:id="@+id/tv_title"
@@ -44,20 +50,20 @@
                     android:textSize="20sp" />
 
                 <TextView
-                    android:maxLines="3"
-                    android:ellipsize="end"
-                    android:layout_below="@id/tv_title"
                     android:id="@+id/tv_description"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_title"
+                    android:ellipsize="end"
+                    android:maxLines="3"
                     android:text="ssssssssssssss"
                     android:textSize="20sp" />
 
                 <ImageView
-                    android:layout_toRightOf="@id/tv_title"
                     android:id="@+id/iv_logo"
                     android:layout_width="50dp"
-                    android:layout_height="50dp" />
+                    android:layout_height="50dp"
+                    android:layout_toRightOf="@id/tv_title" />
             </RelativeLayout>
 
         </android.support.design.widget.CollapsingToolbarLayout>
@@ -67,6 +73,7 @@
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@android:color/white"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     </android.support.v7.widget.RecyclerView>
