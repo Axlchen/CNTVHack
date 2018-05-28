@@ -11,6 +11,7 @@
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/app_bar_height"
+        android:background="@android:color/darker_gray"
         android:fitsSystemWindows="true"
         android:theme="@style/AppTheme.AppBarOverlay">
 
@@ -19,13 +20,45 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
-            app:collapsedTitleGravity="center"
+            app:collapsedTitleGravity="left"
+            app:collapsedTitleTextAppearance="@style/ToolbarTitleStyle"
             app:contentScrim="@android:color/white"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:scrimAnimationDuration="500"
             app:scrimVisibleHeightTrigger="82dp"
-            app:statusBarScrim="@android:color/white"
             app:toolbarId="@+id/toolbar">
+
+            <RelativeLayout
+                android:id="@+id/rl_info"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="?attr/actionBarSize"
+                android:fitsSystemWindows="true"
+                android:paddingHorizontal="20dp"
+                android:paddingTop="25dp">
+
+                <TextView
+                    android:id="@+id/tv_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/tv_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_title"
+                    android:layout_marginRight="90dp"
+                    android:ellipsize="end"
+                    android:maxLines="3" />
+
+                <ImageView
+                    android:id="@+id/iv_logo"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_alignParentRight="true"
+                    android:scaleType="centerCrop" />
+            </RelativeLayout>
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
@@ -33,38 +66,6 @@
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
                 app:popupTheme="@style/AppTheme.PopupOverlay" />
-
-            <RelativeLayout
-                android:fitsSystemWindows="true"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingTop="25dp"
-                android:layout_marginTop="?attr/actionBarSize"
-                android:paddingLeft="15dp">
-
-                <TextView
-                    android:id="@+id/tv_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="ssssssssssssss"
-                    android:textSize="20sp" />
-
-                <TextView
-                    android:id="@+id/tv_description"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/tv_title"
-                    android:ellipsize="end"
-                    android:maxLines="3"
-                    android:text="ssssssssssssss"
-                    android:textSize="20sp" />
-
-                <ImageView
-                    android:id="@+id/iv_logo"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_toRightOf="@id/tv_title" />
-            </RelativeLayout>
 
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>

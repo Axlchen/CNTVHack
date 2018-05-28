@@ -80,7 +80,7 @@ public class ProgramFragment extends BaseFragment {
 
             @Override
             public void onFailure(Call<DataWrapper<ProgramCategory>> call, Throwable t) {
-                Log.d(TAG, t.getMessage());
+                Log.d(TAG, t.toString());
             }
         });
     }

@@ -7,6 +7,7 @@ public class ProgramDetail {
     private String mediaName;
     @SerializedName("biref")
     private String description;
+    private String logoImg;
 
     public String getMediaName() {
         return mediaName;
@@ -16,11 +17,16 @@ public class ProgramDetail {
         return description;
     }
 
+    public String getLogoImg() {
+        return logoImg;
+    }
+
     @Override
     public String toString() {
-        return "ProgramInfo{" +
-                ", mediaName='" + mediaName + '\'' +
+        return "ProgramDetail{" +
+                "mediaName='" + mediaName + '\'' +
                 ", description='" + description + '\'' +
+                ", logoImg='" + logoImg + '\'' +
                 '}';
     }
 }
