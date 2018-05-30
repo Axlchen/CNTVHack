@@ -1,11 +1,14 @@
 package xyz.axlchen.cntvhack.ui.activity;
 
+import android.animation.ValueAnimator;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.LinearLayoutManager;
@@ -48,7 +51,6 @@ public class ProgramDetailActivity extends BaseActivity {
     private TextView mDescription;
     private ImageView mIvLogo;
     private CollapsingToolbarLayout mCollapsingToolbarLayout;
-    private View mRlInfo;
     private AppBarLayout mAppBarLayout;
 
     @Override
@@ -76,7 +78,6 @@ public class ProgramDetailActivity extends BaseActivity {
             actionBar.setDisplayShowTitleEnabled(false);
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
-        mRlInfo = findViewById(R.id.rl_info);
         mTitle = findViewById(R.id.tv_title);
         mDescription = findViewById(R.id.tv_description);
         mIvLogo = findViewById(R.id.iv_logo);
@@ -97,10 +98,21 @@ public class ProgramDetailActivity extends BaseActivity {
                 }
             }
         });
-        RecyclerView recyclerView = findViewById(R.id.recycler_view);
+        final RecyclerView recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         mAdapter = new ProgramVideoListAdapter(recyclerView, null);
         recyclerView.setAdapter(mAdapter);
+        SwipeRefreshLayout refreshLayout = findViewById(R.id.refresh);
+        refreshLayout.setOnChildScrollUpCallback(new SwipeRefreshLayout.OnChildScrollUpCallback() {
+            @Override
+            public boolean canChildScrollUp(@NonNull SwipeRefreshLayout parent, @Nullable View child) {
+                Log.d(TAG,child.toString());
+                boolean b = recyclerView.canScrollVertically(-1);
+                Log.d(TAG, b + "");
+                return b;
+//                return false;
+            }
+        });
     }
 
     private void getData() {
@@ -138,13 +150,15 @@ public class ProgramDetailActivity extends BaseActivity {
 
     private void setDetail(ProgramDetail detail) {
         mTitle.setText(detail.getMediaName());
-        mCollapsingToolbarLayout.setTitle(detail.getMediaName());
         mDescription.setText(detail.getDescription());
+        mCollapsingToolbarLayout.setTitle(detail.getMediaName());
         Glide.with(this)
                 .asBitmap()
                 .listener(new RequestListener<Bitmap>() {
                     @Override
                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {
+                        mTitle.setVisibility(View.VISIBLE);
+                        mDescription.setVisibility(View.VISIBLE);
                         return false;
                     }
 
@@ -153,8 +167,30 @@ public class ProgramDetailActivity extends BaseActivity {
                         Palette.from(resource).generate(new Palette.PaletteAsyncListener() {
                             @Override
                             public void onGenerated(@NonNull Palette palette) {
-                                int lightVibrantColor = palette.getLightVibrantColor(mAppBarLayout.getSolidColor());
-                                mAppBarLayout.setBackgroundColor(lightVibrantColor);
+                                Palette.Swatch swatch = palette.getLightVibrantSwatch();
+                                if (swatch != null) {
+                                    int textColor = swatch.getTitleTextColor();
+                                    mTitle.setTextColor(textColor);
+                                    mDescription.setTextColor(textColor);
+                                }
+                                mTitle.setVisibility(View.VISIBLE);
+                                mDescription.setVisibility(View.VISIBLE);
+
+                                int background = getResources().getColor(android.R.color.darker_gray);
+                                int lightVibrantColor = palette.getLightVibrantColor(background);
+                                ValueAnimator valueAnimator = ValueAnimator
+                                        .ofArgb(background, lightVibrantColor)
+                                        .setDuration(600);
+                                valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                                    @Override
+                                    public void onAnimationUpdate(ValueAnimator animation) {
+                                        int animatedValue = (int) animation.getAnimatedValue();
+                                        Log.d(TAG, Color.red(animatedValue) + " " + Color.green(animatedValue) + " "
+                                                + Color.blue(animatedValue));
+                                        mAppBarLayout.setBackgroundColor(animatedValue);
+                                    }
+                                });
+                                valueAnimator.start();
                             }
                         });
                         return false;
