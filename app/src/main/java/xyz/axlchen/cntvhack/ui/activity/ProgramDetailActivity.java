@@ -3,6 +3,7 @@ package xyz.axlchen.cntvhack.ui.activity;
 import android.animation.ValueAnimator;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -17,6 +18,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -87,12 +89,15 @@ public class ProgramDetailActivity extends BaseActivity {
             @Override
             public void onStateChanged(AppBarLayout appBarLayout, State state) {
                 if (state == State.EXPANDED) {
+                    setStatusBar(true, 0);
                     actionBar.setDisplayShowTitleEnabled(false);
                     mCollapsingToolbarLayout.setTitleEnabled(false);
                 } else if (state == State.COLLAPSED) {
+                    setStatusBar(false, android.R.color.white);
                     actionBar.setDisplayShowTitleEnabled(true);
                     mCollapsingToolbarLayout.setTitleEnabled(true);
                 } else if (state == State.COLLAPSING) {
+                    setStatusBar(true, 0);
                     actionBar.setDisplayShowTitleEnabled(false);
                     mCollapsingToolbarLayout.setTitleEnabled(false);
                 }
@@ -106,11 +111,7 @@ public class ProgramDetailActivity extends BaseActivity {
         refreshLayout.setOnChildScrollUpCallback(new SwipeRefreshLayout.OnChildScrollUpCallback() {
             @Override
             public boolean canChildScrollUp(@NonNull SwipeRefreshLayout parent, @Nullable View child) {
-                Log.d(TAG,child.toString());
-                boolean b = recyclerView.canScrollVertically(-1);
-                Log.d(TAG, b + "");
-                return b;
-//                return false;
+                return recyclerView.canScrollVertically(-1);
             }
         });
     }
@@ -203,5 +204,18 @@ public class ProgramDetailActivity extends BaseActivity {
 
     private void setData(List<ProgramVideoInfo> programVideoList) {
         mAdapter.setProgramVideoList(programVideoList);
+    }
+
+    private void setStatusBar(boolean translucent, int color) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (translucent) {
+                getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+                getWindow().getDecorView().setSystemUiVisibility(0);
+            } else {
+                getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+                getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+                getWindow().setStatusBarColor(getResources().getColor(color));
+            }
+        }
     }
 }

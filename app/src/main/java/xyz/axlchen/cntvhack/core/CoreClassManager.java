@@ -2,6 +2,7 @@ package xyz.axlchen.cntvhack.core;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
 import xyz.axlchen.cntvhack.net.NetworkConfig;
 
 public final class CoreClassManager {
@@ -30,7 +31,7 @@ public final class CoreClassManager {
             synchronized (CoreClassManager.class) {
                 if (sScalarRetrofit == null) {
                     sScalarRetrofit = new Retrofit.Builder().baseUrl(NetworkConfig.API_HOST)
-                            .addConverterFactory(GsonConverterFactory.create())
+                            .addConverterFactory(ScalarsConverterFactory.create())
                             .build();
                 }
             }
